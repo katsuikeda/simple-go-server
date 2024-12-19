@@ -4,13 +4,18 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
 func main() {
-	mux := http.NewServeMux()
+	port := os.Getenv("PORT")
+	if port == "" {
+		log.Fatal("PORT environment variable must be set")
+	}
+	addr := ":" + port
 
-	const addr = ":8080"
+	mux := http.NewServeMux()
 
 	mux.HandleFunc("/", handlePage)
 
